@@ -94,7 +94,7 @@ cards.forEach((card) => {
                 <div class="progress" id="humidityBar" style="width: ${humidity}%"><span>${humidity}%</span></div>
               </div>
               </div>
-              <canvas id="myChart" width="500" height="250"></canvas>
+              <canvas id="myChart"></canvas>
           </div>
           <div class="right">
             <div class="stamp"></div>

@@ -309,6 +309,7 @@ nav a {
 .modal-content {
   position: relative;
   min-width: 60vw;
+  max-width: 80vw;
   padding: 2rem;
   background-color: var(--white);
   border-radius: var(--border-radius);
@@ -324,6 +325,7 @@ nav a {
 @media screen and (max-width: 768px) {
   .modal-content {
     flex-direction: column-reverse;
+    min-height: 80vh;
   }
 
   .left {
@@ -370,14 +372,16 @@ nav a {
 
 .bar {
   flex: 1;
-  height: 1rem;
+  height: 1.25rem;
   border: 1px solid var(--grey-500);
   border-radius: var(--border-radius);
   margin-top: 0.5rem;
 }
 
 .progress {
-  height: 1rem;
+  height: 1.25rem;
+  border-top-left-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
   background-color: var(--primary-300);
   display: grid;
   place-items: center;
@@ -414,4 +418,8 @@ nav a {
 #precipBar,
 #humidityBar {
   transition: var(---transition);
+}
+
+#myChart {
+  max-width: 400px;
 }
