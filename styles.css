@@ -231,14 +231,14 @@ main {
 nav {
   padding: 0.5rem 0;
   background-color: var(--primary-500);
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
   display: flex;
   align-items: center;
 }
 
 nav a {
   color: white;
-  margin: 0px 10px;
+  margin: 0px 0.625rem;
 }
 
 .nav-logo {
@@ -246,12 +246,12 @@ nav a {
   align-items: center;
   color: white;
   width: 25%;
-  margin-left: 10px;
-  font-size: 20px;
+  margin-left: 0.625rem;
+  font-size: 1.25rem;
 }
 
 .capi {
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 .card {
@@ -263,6 +263,7 @@ nav a {
 
 .card:hover {
   box-shadow: var(--shadow-3);
+  cursor: pointer;
 }
 
 .card-info {
@@ -287,4 +288,110 @@ nav a {
   .card-section {
     grid-template-columns: repeat(3, 1fr);
   }
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  place-items: center;
+}
+
+.modal-content {
+  position: relative;
+  width: 60vw;
+  padding: 2rem;
+  background-color: var(--white);
+  border-radius: var(--border-radius);
+  display: flex;
+}
+
+.fa-xmark {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 2rem;
+  color: var(--red-dark);
+  cursor: pointer;
+}
+
+.left {
+  flex: 1 1 50%;
+  padding: 0 2rem;
+  border-right: 2px solid var(--black);
+}
+
+.left__title {
+  text-align: center;
+}
+
+.left__info__logo {
+  width: 40px;
+  margin-left: 0.5rem;
+  margin-bottom: -1rem;
+}
+
+.modal-logo {
+  width: 40px;
+}
+
+.left__info {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1rem;
+}
+
+.left__info__bar {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.bar {
+  flex: 1;
+  height: 1rem;
+  border: 1px solid var(--grey-500);
+  border-radius: var(--border-radius);
+  margin-top: 0.5rem;
+}
+
+.progress {
+  height: 1rem;
+  background-color: var(--grey-500);
+  display: grid;
+  place-items: center;
+}
+
+.progress span {
+  color: var(--white);
+  font-size: 0.75rem;
+}
+
+.right {
+  flex: 1 1 50%;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.stamp {
+  border: 1px solid var(--black);
+  width: 3rem;
+  height: 4rem;
+  box-shadow: var(--shadow-1);
+}
+
+.show-modal {
+  display: grid;
+}
+
+#precip,
+#humidity {
+  cursor: pointer;
+}
+
+#precipBar,
+#humidityBar {
+  transition: var(---transition);
 }

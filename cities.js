@@ -13,3 +13,11 @@ export const villesV2 = [
   { name: 'Rome', desc: 'La ville aux sept collines', url: 'rome.jpg' },
   { name: 'Lisbonne', desc: 'La cité aux mille couleurs', url: 'lisboa.jpg' }
 ];
+
+export const infoBruxelles = {
+  temp: 9,
+  precip: '5%',
+  humidite: '68%',
+  vent: 5,
+  icon: 'https://ssl.gstatic.com/onebox/weather/64/sunny.png'
+};
