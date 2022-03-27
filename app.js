@@ -113,6 +113,12 @@ cards.forEach((card) => {
       modal.classList.remove('show-modal');
     });
 
+    modal.addEventListener('click', (e) => {
+      if (e.target.classList.contains('modal')) {
+        modal.classList.remove('show-modal');
+      }
+    });
+
     precipitationIcon.addEventListener('click', () => {
       precipBar.style.width = '0';
       progress(precipBar, precip);
