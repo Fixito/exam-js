@@ -259,11 +259,19 @@ nav a {
   box-shadow: var(--shadow-2);
   transition: var(---transition);
   padding: 0.51rem;
+  cursor: pointer;
+}
+
+.rotate-left {
+  transform: rotate(2deg);
+}
+
+.rotate-right {
+  transform: rotate(-2deg);
 }
 
 .card:hover {
   box-shadow: var(--shadow-3);
-  cursor: pointer;
 }
 
 .card-info {
@@ -300,7 +308,7 @@ nav a {
 
 .modal-content {
   position: relative;
-  width: 60vw;
+  min-width: 60vw;
   padding: 2rem;
   background-color: var(--white);
   border-radius: var(--border-radius);
@@ -370,7 +378,7 @@ nav a {
 
 .progress {
   height: 1rem;
-  background-color: var(--grey-500);
+  background-color: var(--primary-300);
   display: grid;
   place-items: center;
 }
@@ -392,6 +400,7 @@ nav a {
   width: 3rem;
   height: 4rem;
   box-shadow: var(--shadow-1);
+  margin-right: 1rem;
 }
 
 .show-modal {

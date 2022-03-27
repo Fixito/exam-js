@@ -13,17 +13,16 @@ const progress = (bar, percentage) => {
 };
 
 const getData = async (city) => {
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=fr&appid=aebaf59664d5f3b95320bc7b0a961d43`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=349b948b344f9bb3790f9dfd015f1d50&units=metric&lang=fr`;
   const response = await fetch(url);
   const data = await response.json();
-  console.log(data);
   return data;
 };
 
 let cards = villesV2.map((city) => {
-  const { name, desc, url } = city;
+  const { id, name, desc, url } = city;
   return `
-      <article class="card">
+      <article class="card rotate-${id % 2 ? 'left' : 'right'}">
         <img src="./images/${url}" alt="${name}" class="img" />
         <div class="card-info title">
           <h4 class="card-title">${name}</h4>
@@ -45,7 +44,7 @@ cards.forEach((card) => {
     const {
       name,
       wind: { speed },
-      main: { humidity, temp }
+      main: { humidity, temp, temp_min, temp_max }
     } = await getData(city);
     modal.classList.add('show-modal');
     modal.innerHTML = `
@@ -55,7 +54,7 @@ cards.forEach((card) => {
             <h5 class="left__title">${name}</h5>
             <div class="left__info">
               <span
-                >${(parseFloat(temp) - 273.15).toFixed(2)}°C
+                >${temp}°C
                 <img
                   src="${icon}"
                   alt="vent"
@@ -94,7 +93,8 @@ cards.forEach((card) => {
               <div class="bar">
                 <div class="progress" id="humidityBar" style="width: ${humidity}%"><span>${humidity}%</span></div>
               </div>
-            </div>
+              </div>
+              <canvas id="myChart" width="500" height="250"></canvas>
           </div>
           <div class="right">
             <div class="stamp"></div>
@@ -107,6 +107,7 @@ cards.forEach((card) => {
     const precipBar = document.querySelector('#precipBar');
     const humidityIcon = document.querySelector('#humidity');
     const humidityBar = document.querySelector('#humidityBar');
+    const ctx = document.getElementById('myChart').getContext('2d');
 
     btnClose.addEventListener('click', () => {
       modal.classList.remove('show-modal');
@@ -120,6 +121,32 @@ cards.forEach((card) => {
     humidityIcon.addEventListener('click', () => {
       humidityBar.style.width = '0';
       progress(humidityBar, `${humidity}%`);
+    });
+
+    const myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Today'],
+        datasets: [
+          {
+            label: 'Température minimale',
+            data: [temp_min],
+            borderColor: 'blue'
+          },
+          {
+            label: 'Température maximale',
+            data: [temp_max],
+            borderColor: 'red'
+          }
+        ]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
     });
   });
 });
