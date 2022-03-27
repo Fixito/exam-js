@@ -16,7 +16,7 @@ export const villesV2 = [
 
 export const infoBruxelles = {
   temp: 9,
-  precip: '5%',
+  precip: '25%',
   humidite: '68%',
   vent: 5,
   icon: 'https://ssl.gstatic.com/onebox/weather/64/sunny.png'

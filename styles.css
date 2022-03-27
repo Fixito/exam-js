@@ -307,6 +307,24 @@ nav a {
   display: flex;
 }
 
+.left {
+  flex: 1 1 50%;
+  padding: 0 2rem;
+  border-right: 2px solid var(--black);
+}
+
+@media screen and (max-width: 768px) {
+  .modal-content {
+    flex-direction: column-reverse;
+  }
+
+  .left {
+    margin-top: 1rem;
+    border-right: none;
+    border-top: 2px solid var(--black);
+  }
+}
+
 .fa-xmark {
   position: absolute;
   top: 0.5rem;
@@ -314,12 +332,6 @@ nav a {
   font-size: 2rem;
   color: var(--red-dark);
   cursor: pointer;
-}
-
-.left {
-  flex: 1 1 50%;
-  padding: 0 2rem;
-  border-right: 2px solid var(--black);
 }
 
 .left__title {

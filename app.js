@@ -3,13 +3,21 @@ import { infoBruxelles } from './cities.js';
 
 const section = document.querySelector('.card-section');
 const modal = document.querySelector('.modal');
-const { temp, precip, humidite, vent, icon } = infoBruxelles;
+const { precip, icon } = infoBruxelles;
 
 const progress = (bar, percentage) => {
   bar.style.width = '0';
   setTimeout(() => {
     bar.style.width = percentage;
   }, 500);
+};
+
+const getData = async (city) => {
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=fr&appid=aebaf59664d5f3b95320bc7b0a961d43`;
+  const response = await fetch(url);
+  const data = await response.json();
+  console.log(data);
+  return data;
 };
 
 let cards = villesV2.map((city) => {
@@ -30,16 +38,24 @@ cards = document.querySelectorAll('.card');
 cards = [...cards];
 
 cards.forEach((card) => {
-  card.addEventListener('click', (e) => {
+  card.addEventListener('click', async (e) => {
+    const city =
+      e.currentTarget.firstElementChild.nextElementSibling.firstElementChild
+        .textContent;
+    const {
+      name,
+      wind: { speed },
+      main: { humidity, temp }
+    } = await getData(city);
     modal.classList.add('show-modal');
     modal.innerHTML = `
     <div class="modal-content">
           <i class="fa-solid fa-xmark"></i>
           <div class="left">
-            <h5 class="left__title">Bruxelles</h5>
+            <h5 class="left__title">${name}</h5>
             <div class="left__info">
               <span
-                >${temp}°C
+                >${(parseFloat(temp) - 273.15).toFixed(2)}°C
                 <img
                   src="${icon}"
                   alt="vent"
@@ -47,7 +63,7 @@ cards.forEach((card) => {
                 />
               </span>
               <span>
-                ${vent} km/h
+                ${speed} km/h
                 <img
                   src="./images/wind.png"
                   alt="vent"
@@ -76,7 +92,7 @@ cards.forEach((card) => {
                 id="humidity"
               />
               <div class="bar">
-                <div class="progress" id="humidityBar" style="width: ${humidite}"><span>${humidite}</span></div>
+                <div class="progress" id="humidityBar" style="width: ${humidity}%"><span>${humidity}%</span></div>
               </div>
             </div>
           </div>
@@ -92,7 +108,7 @@ cards.forEach((card) => {
     const humidityIcon = document.querySelector('#humidity');
     const humidityBar = document.querySelector('#humidityBar');
 
-    btnClose.addEventListener('click', (e) => {
+    btnClose.addEventListener('click', () => {
       modal.classList.remove('show-modal');
     });
 
@@ -103,7 +119,7 @@ cards.forEach((card) => {
 
     humidityIcon.addEventListener('click', () => {
       humidityBar.style.width = '0';
-      progress(humidityBar, humidite);
+      progress(humidityBar, `${humidity}%`);
     });
   });
 });
