@@ -241,12 +241,16 @@ nav a {
   margin: 0px 0.625rem;
 }
 
+.nav-center {
+  width: var(--fluid-width);
+  max-width: var(--max-width);
+  margin: auto;
+}
+
 .nav-logo {
   display: flex;
   align-items: center;
   color: white;
-  width: 25%;
-  margin-left: 0.625rem;
   font-size: 1.25rem;
 }
 
