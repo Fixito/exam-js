@@ -1,9 +1,8 @@
 import { villesV2 } from './cities.js';
-import { infoBruxelles } from './cities.js';
+// import { infoBruxelles } from './cities.js';
 
 const section = document.querySelector('.card-section');
-const modal = document.querySelector('.modal');
-const { precip, icon } = infoBruxelles;
+const modal = document.querySelector('.modal-overlay');
 
 const progress = (bar, percentage) => {
   bar.style.width = '0';
@@ -16,6 +15,7 @@ const getData = async (city) => {
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=349b948b344f9bb3790f9dfd015f1d50&units=metric&lang=fr`;
   const response = await fetch(url);
   const data = await response.json();
+
   return data;
 };
 
@@ -34,100 +34,41 @@ let cards = villesV2.map((city) => {
 section.innerHTML = cards.join(' ');
 
 cards = document.querySelectorAll('.card');
-cards = [...cards];
 
 cards.forEach((card) => {
   card.addEventListener('click', async (e) => {
     const city =
       e.currentTarget.firstElementChild.nextElementSibling.firstElementChild
         .textContent;
+
     const {
       name,
       wind: { speed },
-      main: { humidity, temp, temp_min, temp_max }
+      main: { humidity, temp, temp_min, temp_max },
+      rain
     } = await getData(city);
-    modal.classList.add('show-modal');
-    modal.innerHTML = `
-    <div class="modal-content">
-          <i class="fa-solid fa-xmark"></i>
-          <div class="left">
-            <h5 class="left__title">${name}</h5>
-            <div class="left__info">
-              <span
-                >${temp}°C
-                <img
-                  src="${icon}"
-                  alt="vent"
-                  class="left__info__logo"
-                />
-              </span>
-              <span>
-                ${speed} km/h
-                <img
-                  src="./images/wind.png"
-                  alt="vent"
-                  class="left__info__logo"
-                />
-              </span>
-            </div>
-            <div class="left__info__bar">
-              <img
-                src="./images/precipitation.png"
-                alt="précipitation"
-                class="modal-logo"
-                id="precip"
-              />
-              <div class="bar">
-                <div class="progress" id="precipBar" style="width: ${precip}">
-                  <span>${precip}</span>
-                </div>
-              </div>
-            </div>
-            <div class="left__info__bar">
-              <img
-                src="./images/humidity.png"
-                alt="précipitation"
-                class="modal-logo"
-                id="humidity"
-              />
-              <div class="bar">
-                <div class="progress" id="humidityBar" style="width: ${humidity}%"><span>${humidity}%</span></div>
-              </div>
-              </div>
-              <canvas id="myChart"></canvas>
-          </div>
-          <div class="right">
-            <div class="stamp"></div>
-          </div>
-        </div>
-    `;
+
+    modal.classList.add('open-modal');
 
     const btnClose = document.querySelector('.fa-xmark');
+    const leftTitle = document.querySelector('.left__title');
     const precipitationIcon = document.querySelector('#precip');
     const precipBar = document.querySelector('#precipBar');
     const humidityIcon = document.querySelector('#humidity');
     const humidityBar = document.querySelector('#humidityBar');
+    const temperature = document.querySelector('.temp');
+    const wind = document.querySelector('.wind');
     const ctx = document.getElementById('myChart').getContext('2d');
+    let precip = 0;
 
-    btnClose.addEventListener('click', () => {
-      modal.classList.remove('show-modal');
-    });
+    if (rain) {
+      precip = rain['1h'];
+    }
 
-    modal.addEventListener('click', (e) => {
-      if (e.target.classList.contains('modal')) {
-        modal.classList.remove('show-modal');
-      }
-    });
-
-    precipitationIcon.addEventListener('click', () => {
-      precipBar.style.width = '0';
-      progress(precipBar, precip);
-    });
-
-    humidityIcon.addEventListener('click', () => {
-      humidityBar.style.width = '0';
-      progress(humidityBar, `${humidity}%`);
-    });
+    let chartStatus = Chart.getChart('myChart');
+    if (chartStatus != undefined) {
+      chartStatus.destroy();
+    }
 
     const myChart = new Chart(ctx, {
       type: 'line',
@@ -153,6 +94,42 @@ cards.forEach((card) => {
           }
         }
       }
+    });
+
+    leftTitle.textContent = name;
+
+    precipBar.style.width = precip;
+    humidityBar.style.width = `${humidity}%`;
+
+    precipBar.innerHTML = `<span>${precip} mm</span>`;
+    humidityBar.innerHTML = `<span>${humidity}%</span>`;
+
+    temperature.textContent = `${temp}°C`;
+    wind.textContent = `${(speed * 3.6).toFixed(2)} km/h`;
+
+    // precipValue.textContent = precip;
+    // humidityValue.textContent = humidite;
+
+    btnClose.addEventListener('click', () => {
+      modal.classList.remove('open-modal');
+      myChart.destroy();
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target.classList.contains('open-modal')) {
+        modal.classList.remove('open-modal');
+        myChart.destroy();
+      }
+    });
+
+    precipitationIcon.addEventListener('click', () => {
+      precipBar.style.width = '0';
+      progress(precipBar, precip);
+    });
+
+    humidityIcon.addEventListener('click', () => {
+      humidityBar.style.width = '0';
+      progress(humidityBar, `${humidity}%`);
     });
   });
 });

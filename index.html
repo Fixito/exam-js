@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Exam JS</title>
+    <title>ECF JS</title>
+    <!-- font awesome -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
@@ -12,8 +13,10 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <!-- css -->
     <link rel="stylesheet" href="./normalize.css" />
     <link rel="stylesheet" href="./styles.css" />
+    <!-- chart js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
     <script type="module" src="./app.js" defer></script>
   </head>
@@ -28,7 +31,44 @@
     </nav>
     <main>
       <section class="card-section"></section>
-      <div class="modal"></div>
+      <div class="modal-overlay">
+        <div class="modal-container">
+          <i class="fa-solid fa-xmark"></i>
+          <div class="left">
+            <h5 class="left__title">Bruxelles</h5>
+            <div class="left__info">
+              <div>
+                <span class="temp">30°C</span>
+                <i class="fas fa-temperature-half"></i>
+              </div>
+              <div>
+                <span class="wind">125 km/h</span> <i class="fas fa-wind"></i>
+              </div>
+            </div>
+            <div class="left__info__bar">
+              <i class="fas fa-cloud-showers-heavy" id="precip"></i>
+              <div class="bar">
+                <div class="progress" id="precipBar">
+                  <span id="precipValue">30</span>
+                </div>
+              </div>
+            </div>
+            <div class="left__info__bar">
+              <i class="fas fa-droplet" id="humidity"></i>
+              <div class="bar">
+                <div class="progress" id="humidityBar">
+                  <span id="humidityValue">30%</span>
+                </div>
+              </div>
+            </div>
+            <canvas id="myChart"></canvas>
+          </div>
+          <div class="separator"></div>
+          <div class="right">
+            <div class="stamp"></div>
+          </div>
+        </div>
+      </div>
     </main>
   </body>
 </html>

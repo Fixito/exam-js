@@ -258,11 +258,15 @@ nav a {
   font-size: 0.75rem;
 }
 
+.card-section {
+  padding-top: 2rem;
+}
+
 .card {
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-2);
   transition: var(---transition);
-  padding: 0.51rem;
+  padding: 0.5rem;
   cursor: pointer;
 }
 
@@ -302,31 +306,35 @@ nav a {
   }
 }
 
-.modal {
-  display: none;
+.modal-overlay {
   position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.5);
+  display: grid;
   place-items: center;
+  visibility: hidden;
+  z-index: -10;
 }
 
-.modal-content {
+.open-modal {
+  visibility: visible;
+  z-index: 10;
+}
+
+.modal-container {
   position: relative;
-  min-width: 60vw;
-  max-width: 80vw;
   padding: 2rem;
   background-color: var(--white);
   border-radius: var(--border-radius);
-  display: flex;
 }
 
-.left {
+/*.left {
   flex: 1 1 50%;
   padding: 0 2rem;
   border-right: 2px solid var(--black);
-}
+}*/
 
-@media screen and (max-width: 768px) {
+/* @media screen and (max-width: 768px) {
   .modal-content {
     flex-direction: column-reverse;
     min-height: 80vh;
@@ -337,7 +345,7 @@ nav a {
     border-right: none;
     border-top: 2px solid var(--black);
   }
-}
+} */
 
 .fa-xmark {
   position: absolute;
@@ -352,14 +360,9 @@ nav a {
   text-align: center;
 }
 
-.left__info__logo {
-  width: 40px;
-  margin-left: 0.5rem;
-  margin-bottom: -1rem;
-}
-
-.modal-logo {
-  width: 40px;
+.fas {
+  font-size: 1.5rem;
+  width: 1.5rem;
 }
 
 .left__info {
@@ -370,20 +373,22 @@ nav a {
 
 .left__info__bar {
   display: flex;
-  gap: 1rem;
+  align-items: baseline;
+  gap: 2rem;
   margin-bottom: 1rem;
 }
 
 .bar {
-  flex: 1;
+  width: 100%;
   height: 1.25rem;
   border: 1px solid var(--grey-500);
+  color: var(--white);
   border-radius: var(--border-radius);
   margin-top: 0.5rem;
 }
 
 .progress {
-  height: 1.25rem;
+  height: 100%;
   border-top-left-radius: var(--border-radius);
   border-bottom-left-radius: var(--border-radius);
   background-color: var(--primary-300);
@@ -392,13 +397,17 @@ nav a {
 }
 
 .progress span {
-  color: var(--white);
   font-size: 0.75rem;
 }
 
+.separator {
+  width: 100%;
+  height: 0.125rem;
+  background-color: black;
+  margin-bottom: 1rem;
+}
+
 .right {
-  flex: 1 1 50%;
-  padding: 0 1rem;
   display: flex;
   justify-content: flex-end;
 }
@@ -410,8 +419,9 @@ nav a {
   box-shadow: var(--shadow-1);
 }
 
-.show-modal {
-  display: grid;
+#precipBar,
+#humidityBar {
+  transition: var(---transition);
 }
 
 #precip,
@@ -419,11 +429,34 @@ nav a {
   cursor: pointer;
 }
 
-#precipBar,
-#humidityBar {
-  transition: var(---transition);
-}
-
 #myChart {
   max-width: 400px;
+  margin-bottom: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+  .modal-container {
+    display: flex;
+    min-width: 60vw;
+    max-width: 80vw;
+    gap: 1rem;
+  }
+
+  .left {
+    flex: 1;
+  }
+
+  .right {
+    flex: 1;
+  }
+
+  .stamp {
+    margin-top: 1rem;
+    margin-right: 1rem;
+  }
+
+  .separator {
+    height: auto;
+    width: 0.125rem;
+  }
 }
